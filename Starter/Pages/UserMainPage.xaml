@@ -1,0 +1,63 @@
+﻿<local:BasePage x:TypeArguments="local:MenuButtonListViewModel" 
+                x:Class="Starter.UserMainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Starter"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      mc:Ignorable="d" 
+      d:DataContext="{x:Static local:MenuButtonListDesignModel.Instance}">
+
+    <Grid>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+            <StackPanel VerticalAlignment="Center"
+                        HorizontalAlignment="Center" 
+                        >
+
+                <Border Background="{StaticResource Foreground2xLightBrush}"                
+                        CornerRadius="3"
+                        Margin="5 5 5 0"
+                        Padding="5 2"
+                        >
+
+                    <StackPanel>
+
+                        <TextBox Tag="Search..." 
+                                 Style="{StaticResource PlaceholderTextBox}"
+                                 Text="{Binding UserSearchText, UpdateSourceTrigger=PropertyChanged}"
+                                 >
+
+                            <TextBox.InputBindings>
+                                <KeyBinding Key="Esc" Command="{Binding ClearSearchBoxCommand}" />
+                            </TextBox.InputBindings>
+
+                        </TextBox>
+
+                        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                            <ScrollViewer.Resources>
+                                <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">5</sys:Double>
+                            </ScrollViewer.Resources>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Border>
+
+                <ItemsControl d:DataContext="{x:Static local:MenuButtonListDesignModel.Instance}" ItemsSource="{Binding CategoryList}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:CategoryButtonListControl />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <TextBlock Text="{Binding AppVersion}" 
+                           HorizontalAlignment="Right" 
+                           Margin="0 0 10 5"
+                           Style="{StaticResource FontTextBlockXSmallMTBStyle}"
+                           Foreground="{StaticResource ForegroundGrayBrush}"/>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</local:BasePage>
